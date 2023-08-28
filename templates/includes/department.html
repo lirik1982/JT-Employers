@@ -1,15 +1,63 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
-    hello world
-    {{ department_edit.id }}
-
-
-    <form action="/your-name/" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
+  <div class="container">
+    <form actiont="" method="POST">
+      <div class="row">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Обзор отдела {{ department_edit.fullname }}</h5>
+              {% csrf_token %}
+              {% for fm in form %}
+                {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small> <br />
+              {% endfor %}
+              <div class="row">
+                <div class="col-4">
+                  <button type="submit" name="save_changes" class="btn btn-primary h-100">Внести изменения</button>
+                </div>
+                <div class="col-4">
+                  <button button type="submit" name="seed" class="btn btn-secondary h-100">Заполнить сотрудниками</button>
+                </div>
+                <div class="col-4">
+                  <button type="submit" name="clear" class="btn btn-secondary h-100">Удалить записи о сотрудниках</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Статистика отдела</h5>
+              <div class="form-group row">
+                <label for="employers_count" class="col-sm-4 col-form-label">Количество сотрудников:</label>
+                <div class="col-sm-3">
+                  <input type="text" readonly class="form-control-plaintext" id="employers_count" value="{{ employers_count }}" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="boss_name" class="col-sm-4 col-form-label">Руководитель:</label>
+                <div class="col-sm-8">
+                  <input type="text" readonly class="form-control-plaintext" id="boss_name" value="{{ boss.name }}" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="mid_salary" class="col-sm-4 col-form-label">Средняя зарплата:</label>
+                <div class="col-sm-8">
+                  <input type="text" readonly class="form-control-plaintext" id="mid_salary" value="{{ mid_salary }}" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="avg_age" class="col-sm-4 col-form-label">Средний возраст:</label>
+                <div class="col-sm-8">
+                  <input type="text" readonly class="form-control-plaintext" id="avg_age" value="{{ avg_age }}" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
-
-{% endblock content %}
+  </div>
+{% endblock %}

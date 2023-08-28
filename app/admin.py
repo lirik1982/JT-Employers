@@ -7,16 +7,18 @@ from mptt.admin import MPTTModelAdmin
 
 
 class EmployerAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
+    pass
+    # prepopulated_fields = {"slug": ("name",)}
 
 
 class PositionAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
+    # prepopulated_fields = {"slug": ("name",)}
+    pass
 
 
 class DepartmentAdmin(MPTTModelAdmin):
     mptt_level_indent = 20
-    prepopulated_fields = {"slug": ("name",)}
+    # prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Employer, EmployerAdmin)

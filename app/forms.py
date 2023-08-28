@@ -1,5 +1,13 @@
 from django import forms
+from .models import Department
 
 
-class DepartmnentForm(forms.Form):
-    name = forms.CharField(label='Your name', max_length=100)
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ['fullname',  'parent', 'staffing']
+        widgets = {
+            'fullname': forms.TextInput(attrs={'class': 'form-control'}),
+            'parent': forms.Select(attrs={'class': 'form-control'}),
+            'staffing': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

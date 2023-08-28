@@ -38,10 +38,13 @@
 <body>
   {% include 'includes/header.html' %}
 
+
+
   {% include 'includes/sidebar.html' %}
 
   <main id="main" class="main">
 
+    {% include 'includes/messages.html' %}
     {% block content %}
     {% endblock %}
 
@@ -65,6 +68,8 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
+
+
 
 </body>
 

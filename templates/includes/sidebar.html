@@ -3,10 +3,10 @@
  <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-      {% recursetree department %}
+      {% recursetree departments %}
           <li>
             <a class="nav-link" href="{% url 'department' node.id %}">
-            <span>{{ node.name }}</span>  
+            <span>{{ node.fullname }}</span>  
             </a>
             {% if not node.is_leaf_node %}
                 <ul class="children">

@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 # Create your models here.
@@ -20,7 +19,7 @@ class Employer(models.Model):
 
     salary = models.IntegerField()
     work_since = models.DateField(auto_now=False, auto_now_add=False)
-    slug = models.SlugField()
+    birth_date = models.DateField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return self.name
@@ -32,33 +31,27 @@ class Employer(models.Model):
 
 class Position(models.Model):
     name = models.CharField(max_length=50)
-    slug = models.SlugField()
 
     def __str__(self):
         return self.name
 
 
 class Department(MPTTModel):
-    name = models.CharField(max_length=100, default='', unique=True)
-    # будет применятся для автонаполнения
-    # vacancy = models.IntegerField(blank=True, null=True)
+    fullname = models.CharField(max_length=100, default='',
+                                verbose_name="Название отдела")
     parent = TreeForeignKey(
         "self", on_delete=models.PROTECT, null=True, blank=True,
         related_name='children', db_index=True, verbose_name='Старший отдел')
-    slug = models.SlugField(max_length=50, unique=True)
 
-    staffing = models.IntegerField(default=2000)
+    staffing = models.IntegerField(
+        default=2000, verbose_name='Штатная численность')
 
     def __str__(self):
-        return self.name
+        return self.fullname
 
     class MPTTMeta:
-        order_insertetion_by = ['name']
+        order_insertetion_by = ['fullname']
 
     class Meta:
-        unique_together = [['parent', 'slug']]
         verbose_name = 'Отдел'
         verbose_name_plural = 'Отделы'
-
-    def get_absolute_url(self):
-        return reverse("employer_by_department", args=[str(self.slug)])
