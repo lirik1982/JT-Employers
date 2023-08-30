@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="container">
+    <form actiont="" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Карточка сотрудника:</h5>
+              {% csrf_token %}
+              {% for fm in form %}
+                {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small> <br />
+              {% endfor %}
+              
+              <div class="form-group mb-3">
+                <label for="boss_name" class="col-sm-4 col-form-label">Фото:</label>
+                <div class="col-sm-8">
+                    <input type="file" name="myfile1">
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <label for="boss_name" class="col-3">Руководитель:</label>
+                <div class="col-5">
+                    {% if boss %}
+                        <a href="{% url 'employer' boss.id %}">
+                        <span  class="text-primary">{{ boss.name }}</span>  
+                        </a>
+                    {% else %}
+                        <span>-</span>  
+                    {% endif %}
+                </div>
+              </div>
+            
+              <div class="row">
+                <div class="col-4">
+                  <button type="submit" name="save_changes" class="btn btn-primary h-100">Внести изменения</button>
+                </div>
+                <div class="col-4">
+                  <button type="submit" name="move" class="btn btn-secondary h-100">Перевести в резерв</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}

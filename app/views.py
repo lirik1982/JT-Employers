@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.db.models import Avg
 
 from .models import Department, Employer, Position
-from .forms import DepartmentForm
+from .forms import DepartmentForm, EmployerForm
 from django.views import View
 from faker import Faker
 from random import randint
@@ -110,7 +110,6 @@ def create_boss(department):
         position.id = 9999
         position.name = "Начальник"
         position.save()
-
     create_employer(department=department, position=position)
 
 
@@ -133,3 +132,97 @@ def clear_employers(request, id) -> bool:
         request, 'Удалены записи о сотрудниках')
 
     return True
+
+
+class ViewEmployer(View):
+    def get(self, request, id):
+        departments = Department.objects.all()
+        employer = get_object_or_404(Employer, pk=id)
+        department = get_object_or_404(Department, employer=employer)
+        form = EmployerForm(instance=employer)
+        try:
+            boss = Employer.objects.get(
+                department=department, position_id=9999)
+        except Employer.DoesNotExist:
+            boss = None
+        return render(request, 'includes/employer.html', locals())
+
+    def post(self, request, id):
+        form = EmployerForm(request.POST)
+        if form.is_valid():
+            if "save_changes" in request.POST:
+                employer = get_object_or_404(Employer, pk=id)
+                employer.name = form.cleaned_data['name']
+                employer.position = get_object_or_404(
+                    Position, name=form.cleaned_data['position']
+                )
+                employer.department = get_object_or_404(
+                    Department, fullname=form.cleaned_data['department']
+                )
+                employer.work_since = form.cleaned_data['work_since']
+                employer.birth_date = form.cleaned_data['birth_date']
+                employer.save()
+                messages.success(
+                    request, 'Изменения сохранены')
+                return redirect(request.META.get('HTTP_REFERER'))
+
+            if "move" in request.POST:
+                try:
+                    departmnet = Department.objects.get(id=8888)
+                except Department.DoesNotExist:
+                    departmnet = Department()
+                    departmnet.id = 8888
+                    departmnet.fullname = "Резерв"
+                    departmnet.parent = None
+                    departmnet.save()
+                    messages.success(
+                        request, 'Создан отдел - Резерв')
+
+                employer = get_object_or_404(Employer, pk=id)
+                employer.department = departmnet
+                employer.save()
+                messages.success(
+                    request, 'Изменения сохранены')
+
+        return redirect('home')
+
+
+class ViewEmployersList(View):
+    def get(self, request, id):
+        departments = Department.objects.all()
+        department = get_object_or_404(Department, pk=id)
+        employers = Employer.objects.filter(department=department).all()
+        try:
+            boss = Employer.objects.get(
+                department=department, position_id=9999)
+        except Employer.DoesNotExist:
+            boss = None
+
+        return render(request, 'includes/employers_list.html', locals())
+
+    # def post(self, request, id):
+    #     form = DepartmentForm(request.POST)
+
+    #     if form.is_valid():
+    #         if "save_changes" in request.POST:
+    #             department_edit = get_object_or_404(Department, pk=id)
+    #             department_edit.fullname = form.cleaned_data['fullname']
+    #             department_edit.staffing = form.cleaned_data['staffing']
+    #             select = get_object_or_404(
+    #                 Department, fullname=form.cleaned_data['parent'])
+    #             department_edit.parent = select
+    #             department_edit.save()
+    #             messages.success(
+    #                 request, 'Изменения сохранены')
+    #             return redirect(request.META.get('HTTP_REFERER'))
+
+    #         if "seed" in request.POST:
+    #             clear_employers(request, id=id)
+    #             seed(request, id=id)
+    #             return redirect(request.META.get('HTTP_REFERER'))
+
+    #         if "clear" in request.POST:
+    #             clear_employers(request, id=id)
+    #             return redirect(request.META.get('HTTP_REFERER'))
+
+    #     return redirect('home')

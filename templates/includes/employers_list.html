@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Список сотрудников отдела: {{ department }}</h5>
+
+          <!-- Table with stripped rows -->
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Должность</th>
+                <th scope="col">Оклад</th>
+                <th scope="col">Дата приема</th>
+                <th scope="col">Дата рождения</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for employer in employers %}
+                <tr>
+                        <th scope="row">
+                            <a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer.id }}</a></th>
+                    
+                    {% if employer.position == boss.position %}
+                            <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
+                        {{ employer }}</a></td>
+                            <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
+                        {{ employer.position }}</a></td>
+                            <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
+                        {{ employer.salary }}</a></td>
+                            <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
+                        {{ employer.work_since }}</a></td>
+                            <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
+                        {{ employer.birth_date }}</a></td>
+                        
+                    {% else %}
+                        <td><a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer }}</a></td>
+                        <td><a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer.position }}</a></td>
+                        <td><a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer.salary }}</a></td>
+                        <td><a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer.work_since }}</a></td>
+                        <td><a class="nav-link" href="{% url 'employer' employer.id %}">
+                            {{ employer.birth_date }}</a></td>
+                    {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
