@@ -10,7 +10,7 @@ class Department(MPTTModel):
         related_name='children', db_index=True, verbose_name='Старший отдел')
 
     staffing = models.IntegerField(
-        default=2000, verbose_name='Штатная численность')
+        default=50, verbose_name='Штатная численность')
 
     def __str__(self):
         return self.fullname

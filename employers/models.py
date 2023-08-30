@@ -10,7 +10,7 @@ class Employer(models.Model):
     )
 
     department = models.ForeignKey(
-        'Department', on_delete=models.PROTECT, verbose_name='Отдел',
+        'departments.Department', on_delete=models.PROTECT, verbose_name='Отдел',
         blank=True, null=True
     )
 
@@ -36,3 +36,7 @@ class Position(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Должность'
+        verbose_name_plural = 'Должности'

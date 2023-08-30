@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'app',
     'mptt',
     'departments',
-    'employers',
+    'employers'
 ]
 
 MIDDLEWARE = [

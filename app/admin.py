@@ -1,24 +1,21 @@
 from django.contrib import admin
-from .models import Employer, Department, Position
+# from .models import Employer, Department, Position
+from employers.models import Employer, Position
+from departments.models import Department
 
 from mptt.admin import MPTTModelAdmin
-
-# Register your models here.
 
 
 class EmployerAdmin(admin.ModelAdmin):
     pass
-    # prepopulated_fields = {"slug": ("name",)}
 
 
 class PositionAdmin(admin.ModelAdmin):
-    # prepopulated_fields = {"slug": ("name",)}
     pass
 
 
 class DepartmentAdmin(MPTTModelAdmin):
     mptt_level_indent = 20
-    # prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Employer, EmployerAdmin)

@@ -10,9 +10,10 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
+      <form class="search-form d-flex align-items-center" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
         <input type="text" name="query" placeholder="Поиск сотрудника..." title="Введите имя сотрудника">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        <button type="submit" title="Search" name="SearchSubmit"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
 
