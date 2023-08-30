@@ -34,9 +34,9 @@
                             <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
                         {{ employer.salary }}</a></td>
                             <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
-                        {{ employer.work_since }}</a></td>
+                        {{ employer.work_since|date:"Y-m-d" }}</a></td>
                             <td class="text-primary"><a class="nav-link" href="{% url 'employer' employer.id %}">
-                        {{ employer.birth_date }}</a></td>
+                        {{ employer.birth_date|date:"Y-m-d" }}</a></td>
                         
                     {% else %}
                         <td><a class="nav-link" href="{% url 'employer' employer.id %}">
@@ -46,9 +46,9 @@
                         <td><a class="nav-link" href="{% url 'employer' employer.id %}">
                             {{ employer.salary }}</a></td>
                         <td><a class="nav-link" href="{% url 'employer' employer.id %}">
-                            {{ employer.work_since }}</a></td>
+                            {{ employer.work_since|date:"Y-m-d" }}</a></td>
                         <td><a class="nav-link" href="{% url 'employer' employer.id %}">
-                            {{ employer.birth_date }}</a></td>
+                            {{ employer.birth_date|date:"Y-m-d" }}</a></td>
                     {% endif %}
                 </tr>
               {% endfor %}

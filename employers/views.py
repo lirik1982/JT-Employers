@@ -138,7 +138,6 @@ class ViewEmployer(View):
 class ViewEmployersList(View):
     def get(self, request, id):
         order_by = request.GET.get('order_by', 'id')
-        # Model.objects.all().order_by(order_by)
         departments = Department.objects.all()
         department = get_object_or_404(Department, pk=id)
         employers = Employer.objects.filter(
