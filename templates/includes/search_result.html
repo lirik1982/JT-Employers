@@ -8,16 +8,16 @@
           <h5 class="card-title">Результат поиска: {{ search }}</h5>
 
           <!-- Table with stripped rows -->
-          <table class="table table-striped">
+          <table class="table table-striped tablesorted" id="myTable">
             <thead>
               <tr>
-                <th scope="col"><a href="?query={{ search }}&order_by=id">#</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=name">ФИО</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=department">Отдел</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=position">Должность</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=salary">Оклад</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=work_since">Дата приема</a></th>
-                <th scope="col"><a href="?query={{ search }}&order_by=birth_date">Дата рождения</a></th>
+                <th scope="col">#</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Отдел</th>
+                <th scope="col">Должность</th>
+                <th scope="col">Оклад</th>
+                <th scope="col">Дата приема</th>
+                <th scope="col">Дата рождения</th>
               </tr>
             </thead>
             <tbody>
