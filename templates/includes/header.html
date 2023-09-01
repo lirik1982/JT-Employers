@@ -1,19 +1,30 @@
 {% load static %}
 <!-- ======= Header ======= -->
-<header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{% static 'img/logo.png' %}" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
-      </a>
-    </div><!-- End Logo -->
+<header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-between col-12">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+      <img src="{% static 'img/logo.png' %}" alt="">
+      <span class="d-none d-lg-block">NiceAdmin</span>
+    </a>
 
-    <div class="search-bar">
+    <div class="search-bar col-2">
       <form class="search-form d-flex align-items-center" method="GET" action="{% url 'search' %}">
         <input type="text" name="query" placeholder="Поиск сотрудника..." title="Введите имя сотрудника">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
 
-  </header><!-- End Header -->
+    <div class="d-flex justify-content-start col-8">
+      <div class="d-flex justify-content-between col-2">
+        {% if request.user.is_authenticated %}
+          <div><a class="text-primary" href="{% url 'logout' %}">Выход:
+            {{ user.username }}</a></div>
+        {% else %}
+          <div><a class="text-primary" href="{% url 'login' %}">Авторизация</a></div>
+        {#  <div><a class="text-primary" href="{% url 'register' %}">Регистрация</a></div>#}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header><!-- End Header -->

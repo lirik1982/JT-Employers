@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from departments.models import Department
 from employers.models import Employer
 
 
 def main(request):
+    if not request.user.is_authenticated:
+        print('redirect')
+        return redirect('login')
+
     departments = Department.objects.all()
     context = {'departments': departments}
     return render(request, 'index.html', context)
